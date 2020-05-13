@@ -11,7 +11,7 @@ public class ThreadedClientTuto {
 		}
 		
 		try (var socket = new Socket(args[0], 59090)) {
-			System.out.println("Entrer du texte. CTRL + D ou CTRL + C pour quitter.");
+			System.out.println("Entrer du texte.");
 			var scanner = new Scanner(System.in);
 			var in = new Scanner (socket.getInputStream());
 			var out = new PrintWriter(socket.getOutputStream(), true);
