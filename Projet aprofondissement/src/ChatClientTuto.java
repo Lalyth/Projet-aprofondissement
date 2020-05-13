@@ -59,9 +59,10 @@ public class ChatClientTuto {
 					messageArea.append(line.substring(8) + "\n");
 				}
 			}
+			socket.close();
 		} finally {
 			frame.setVisible(false);
-			frame.dispose();
+			frame.dispose();			
 		}
 	}
 
@@ -73,6 +74,6 @@ public class ChatClientTuto {
 		var client = new ChatClientTuto(args[0]);
 		client.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		client.frame.setVisible(true);
-		client.run();
+		client.run();		
 	}
 }

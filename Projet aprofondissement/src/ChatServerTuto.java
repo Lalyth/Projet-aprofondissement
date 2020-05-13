@@ -36,7 +36,7 @@ public class ChatServerTuto {
 		public void run() {
 			try {
 				in = new Scanner(socket.getInputStream());
-				out = new PrintWriter(socket.getOutputStream());
+				out = new PrintWriter(socket.getOutputStream(), true);
 
 				while (true) {
 					out.println("SUBMITNAME");
@@ -45,35 +45,43 @@ public class ChatServerTuto {
 						return;
 					}
 
-					synchronized (names) {
+					synchronized (names) {						
 						if (!name.isBlank() && !names.contains(name)) {
-							names.add(name);
+							names.add(name);							
 							break;
 						}
 					}
 				}
 
 				out.println("NAMEACCEPTED " + name);
+
 				for (PrintWriter writer : writers) {
 					writer.println("MESSAGE " + name + " has joined");
 				}
+
+				System.out.println(name + " has joined");
 				writers.add(out);
 
 				while (true) {
 					String input = in.nextLine();
+
 					if (input.toLowerCase().startsWith("/quit")) {
 						return;
 					}
+
 					for (PrintWriter writer : writers) {
 						writer.println("MESSAGE " + name + ": " + input);
 					}
+
 				}
 			} catch (Exception e) {
 				System.out.println(e);
 			} finally {
+
 				if (out != null) {
 					writers.remove(out);
 				}
+
 				if (name != null) {
 					System.out.println(name + " is leaving");
 					names.remove(name);	
@@ -81,6 +89,7 @@ public class ChatServerTuto {
 						writer.println("MESSAGE " + name + " has left");
 					}
 				}
+
 				try {
 					socket.close();
 				} catch (IOException e) {
