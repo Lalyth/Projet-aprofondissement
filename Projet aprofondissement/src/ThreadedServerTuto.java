@@ -39,17 +39,13 @@ public class ThreadedServerTuto {
 
 			} catch (Exception e) {
 				System.out.println("Erreur socket:" + socket);
-
 			} finally {
 				try {
 					socket.close();
-				} catch (IOException e) {
-				}
+				} catch (IOException e) {					
+				}				
 				System.out.println("Fermeture du socket: " + socket);
 			}
 		}
-
 	}
-
-
 }

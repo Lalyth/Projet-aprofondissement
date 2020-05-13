@@ -9,6 +9,7 @@ public class ThreadedClientTuto {
 			System.err.println("IP comme argument");
 			return;
 		}
+		
 		try (var socket = new Socket(args[0], 59090)) {
 			System.out.println("Entrer du texte. CTRL + D ou CTRL + C pour quitter.");
 			var scanner = new Scanner(System.in);
@@ -19,10 +20,8 @@ public class ThreadedClientTuto {
 				out.println(scanner.nextLine());
 				System.out.println(in.nextLine());
 			}
+			
 			scanner.close();
 		}
-
 	}
-
-
 }
