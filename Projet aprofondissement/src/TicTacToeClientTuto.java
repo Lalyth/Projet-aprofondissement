@@ -97,9 +97,7 @@ public class TicTacToeClientTuto {
 	}
 
 	static class Square extends JPanel {
-		/**
-		 * 
-		 */
+		
 		private static final long serialVersionUID = 1L;
 		JLabel label = new JLabel();
 

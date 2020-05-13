@@ -40,7 +40,6 @@ public class TicTacToeServerTuto {
 
 		public boolean boardFilledUp() {
 			return Arrays.stream(board).allMatch(p -> p != null);
-
 		}
 
 		public synchronized void move(int location, Player player) {
