@@ -1,4 +1,4 @@
-package Phil;
+package phil;
 /* Serveur pour Projet Approfondissement
  * Auteur : Philippe Lamarche & Alexandre Blouin
  * Date : 14 Mai 2020 */
@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 
 // Tout commentaire entre parenthèse provient des tooltips d'Eclipse
 
-public class Server {
+public class server {
 	static int total = 0;
 
 	private static Set<PrintWriter> writers = new HashSet<>();
@@ -45,12 +45,11 @@ public class Server {
 			try {
 				var in = new Scanner(socket.getInputStream()); // Crée l'objet in qui recoit les messages du client
 				out = new PrintWriter(socket.getOutputStream(), true); // Crée l'objet out qui envoie les messages au client
-
+				out.println("NEW bonjour que voulez vous marquer?");
 				writers.add(out); // Ajout du out dans une liste pour pouvoir envoyer des messages broadcast
 				
 				// Action du programme
 				while (in.hasNextLine()) {
-					// while (true) {
 					String messageRecu = in.nextLine(); // Recoit la ligne de texte 
 					System.out.println(messageRecu);
 					
@@ -60,9 +59,10 @@ public class Server {
 						System.out.println("Total est: " + total);
 
 						for (PrintWriter writer : writers) {
-							writer.println("Nouveau total est: " + total);
+							writer.println("MESSAGE Nouveau total est: " + total);
 						}
-
+						
+						out.println("PROMPT que voulez vous ajouter");
 					} else {
 						out.println(messageRecu); // Rien pour le recevoir
 					}

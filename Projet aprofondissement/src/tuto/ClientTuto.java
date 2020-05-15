@@ -1,4 +1,4 @@
-package Tuto;
+package tuto;
 
 import java.io.IOException;
 import java.net.Socket;

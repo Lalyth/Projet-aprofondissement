@@ -1,4 +1,4 @@
-package Tuto;
+package tuto;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
