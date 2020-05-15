@@ -22,9 +22,12 @@ public class Client {
 
 			// Ce que le programme fait
 			System.out.println("Écrit quelque chose (ADD pour ajouter au total)");
-			while (scan.hasNextLine()) {				
+			//while (scan.hasNextLine()) {	
+			while (scan.hasNextLine()) {
 				out.println(scan.nextLine()); // Envoie une ligne de texte au serveur
-				System.out.println(in.nextLine());
+				//while (in.hasNextLine()) {
+					System.out.println(in.nextLine());
+				//}
 			}
 			scan.close();
 		}

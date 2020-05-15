@@ -49,6 +49,7 @@ public class Server {
 				
 				// Action du programme
 				while (in.hasNextLine()) {
+					// while (true) {
 					String messageRecu = in.nextLine(); // Recoit la ligne de texte 
 					System.out.println(messageRecu);
 					
