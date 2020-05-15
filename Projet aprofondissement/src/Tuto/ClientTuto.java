@@ -16,5 +16,6 @@ public class ClientTuto {
 		var socket = new Socket(args[0], 59090);
 		var in = new Scanner(socket.getInputStream());
 		System.out.println("Server response: " + in.nextLine());
+		socket.close();
 	}
 }
