@@ -6,6 +6,7 @@ import java.util.Scanner;
 /* Client pour Projet Approfondissement
  * Auteur : Philippe Lamarche & Alexandre Blouin
  * Date : 14 Mai 2020 */
+//allo//
 
 public class testclient {
 
