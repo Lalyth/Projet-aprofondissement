@@ -14,60 +14,62 @@ import java.util.concurrent.Executors;
 
 // Tout commentaire entre parenthèse provient des tooltips d'Eclipse
 
+/* for (PrintWriter writer : writers) {
+ * writer.println("MESSAGE Nouveau total est: " + total); }
+ }*/
+
 public class server {
-	static int total = 0;
 
 	private static Set<PrintWriter> writers = new HashSet<>();
 
 	public static void main(String[] args) throws Exception {
 		try (var listener = new ServerSocket(59090)) {
-			System.out.println("Elserveurrironne..");
+			System.out.println("Server status : Barely Working");
 			var pool = Executors.newFixedThreadPool(20); // Nombre de socket disponible dans le pool
 
 			while (true) {
-				pool.execute(new NomDeLaClasseDuProgrammeDansLeServeur(listener.accept())); // "Listens for a connection to be made to this socket and accepts it. The method blocks until a connection is made."
+				pool.execute(new JavaMon(listener.accept())); // "Listens for a connection to be made to this socket and accepts it. The method blocks until a connection is made."
 			}
 
 		}
 	}
 
-	private static class NomDeLaClasseDuProgrammeDansLeServeur implements Runnable {
+	private static class JavaMon implements Runnable {
 		private Socket socket; // "A socket is an endpoint for communication between two machines."
-		private PrintWriter out;
-		
-		NomDeLaClasseDuProgrammeDansLeServeur(Socket socket) { // Constructor qui va etre appelé pour assigner un socket a une connexion (listener)
+		JavaMon(Socket socket) { // Constructor qui va etre appelé pour assigner un socket a une connexion
 			this.socket = socket; 
 		}
 
+		static String messageRecu;
+		static String nomA;
+		static String nomB;		
+		static int PVA;
+		static int PVB;
+
+
+		@Override
 		public void run() {
 			System.out.println("Connection avec: " + socket);
-
 			try {
 				var in = new Scanner(socket.getInputStream()); // Crée l'objet in qui recoit les messages du client
-				out = new PrintWriter(socket.getOutputStream(), true); // Crée l'objet out qui envoie les messages au client
-				out.println("NEW bonjour que voulez vous marquer?");
-				writers.add(out); // Ajout du out dans une liste pour pouvoir envoyer des messages broadcast
-				
+				var out = new PrintWriter(socket.getOutputStream(), true); // Crée l'objet out qui envoie les messages au client
+
+				writers.add(out); // Ajout du 'out' dans une liste pour pouvoir envoyer des messages broadcast
+
 				// Action du programme
-				while (in.hasNextLine()) {
-					String messageRecu = in.nextLine(); // Recoit la ligne de texte 
-					System.out.println(messageRecu);
-					
-					if (messageRecu.startsWith("ADD")) {
-						int intA = Integer.parseInt(messageRecu.substring(4));
-						total = total + intA;
-						System.out.println("Total est: " + total);
+				out.println("NEW");
 
-						for (PrintWriter writer : writers) {
-							writer.println("MESSAGE Nouveau total est: " + total);
-						}
-						
-						out.println("PROMPT que voulez vous ajouter");
-					} else {
-						out.println(messageRecu); // Rien pour le recevoir
+				while (in.hasNextLine()) { 
+					messageRecu = in.nextLine();
+
+					if (messageRecu.startsWith("NOM")) {
+						nomA = messageRecu.substring(3);
+						System.out.println(nomA + " s'ajoute à la partie");
+						out.println("MENU");
 					}
-
+					
 				}
+				
 			} catch (IOException e) { // InputOutput Stream Exeception
 				System.out.println("Erreur socket:" + socket);
 				e.printStackTrace();

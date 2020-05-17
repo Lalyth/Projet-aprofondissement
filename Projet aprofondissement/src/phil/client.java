@@ -14,9 +14,12 @@ public class client {
 	static Scanner in;
 	static PrintWriter out;
 	static String messageRecu = "";
-	static String messageBroad = "";
 
-	static Executor pool = Executors.newFixedThreadPool(5);
+	static final String NEW = "Bonjour, quel est votre nom ?";
+	static String nom = "";
+
+	static final String MENU = "Appuyer sur 1 pour attaquer, 2 pour notCodedYet, 3 pour notCodedYet";
+	static final String ATT = "Appuyer sur 1 pour faire 5 de dégats, 2 pour crash le programme, 3 pour s'auto DDOS";
 
 	public static void main(String[] args) throws Exception {
 		if (args.length != 1) {
@@ -25,52 +28,79 @@ public class client {
 		}
 
 		try (var socket = new Socket(args[0], 59090)) {
-			System.out.println("Connexion établie avec le serveur");
+			System.out.println("- - Connexion établie avec le serveur - -");
 			scan = new Scanner(System.in);
 			in = new Scanner (socket.getInputStream());
 			out = new PrintWriter(socket.getOutputStream(), true);
 
 			// Ce que le programme fait
-			pool.execute(new ecouteBroadcast());
-
-			while (in.hasNextLine()) {	
+			while (in.hasNextLine()) {
 				messageRecu = in.nextLine();
-				
-				if (messageRecu.startsWith("MESSAGE")) {
-					messageBroad = messageRecu.substring(8);
-				}
 
 				if (messageRecu.startsWith("NEW")) {
-					messageRecu = messageRecu.substring(4);
-					System.out.println(messageRecu);
-					out.println(scan.nextLine());
+					System.out.println(NEW);
+					nom = scan.nextLine();			
+					out.println("NOM" + nom);
 				}
 
-				if (messageRecu.startsWith("PROMPT")) {
-					messageRecu = messageRecu.substring(7);
-					System.out.println(messageRecu);
-					out.println(scan.nextLine());
+				if (messageRecu.startsWith("MENU")) {
+					menu();
 				}
-
 			}
-
-			scan.close();
 		}
 	}
 
-	private static class ecouteBroadcast implements Runnable {
+	private static void menu() {
+		System.out.println(MENU);
 
-		@Override
-		public void run() {
-
-			while (true) {	
-				if (!client.messageBroad.isEmpty()) {
-					System.out.println(client.messageBroad);
-					client.messageBroad = "";
-				}
-			}
+		int choix = scan.nextInt();
+		
+		switch(choix) {
+			case 1:
+				attaque();
+				break;
+			case 2:
+				equipe();
+				break;
+			case 3:
+				item();
+			default:
+				System.out.println("Choix valide svp");
 		}
-	} 
+		
+	}
+
+	private static void attaque() {
+		System.out.println(ATT);
+
+		int choix = scan.nextInt();
+
+		switch (choix) {
+			case 1 :
+// enlever 5 dmg a l'autre
+				break;
+			case 2 :
+
+				break;
+			case 3 :
+
+				break;
+			default : 
+				System.out.println("");
+		}
+	}
+
+	private static void equipe() {
+
+	}
+
+	private static void item() {
+
+	}
 
 
-}
+
+
+} 
+
+
