@@ -97,7 +97,7 @@ public class TicTacToeServerTuto {
 					output.println("MESSAGE Waiting for opponent to connect");
 				} else {
 					opponent = currentPlayer;
-					opponent.opponent = this;
+					opponent.opponent = this; // wat
 					opponent.output.println("MESSAGE Your move");
 				}
 			}

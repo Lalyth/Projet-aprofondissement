@@ -77,7 +77,7 @@ public class client {
 
 		switch (choix) {
 			case 1 :
-// enlever 5 dmg a l'autre
+				
 				break;
 			case 2 :
 

@@ -20,6 +20,13 @@ import java.util.concurrent.Executors;
 
 public class server {
 
+	static String messageRecu;
+	
+	static String nomA;
+	static String nomB;		
+	static int PVA;
+	static int PVB;
+
 	private static Set<PrintWriter> writers = new HashSet<>();
 
 	public static void main(String[] args) throws Exception {
@@ -29,6 +36,7 @@ public class server {
 
 			while (true) {
 				pool.execute(new JavaMon(listener.accept())); // "Listens for a connection to be made to this socket and accepts it. The method blocks until a connection is made."
+			
 			}
 
 		}
@@ -36,16 +44,10 @@ public class server {
 
 	private static class JavaMon implements Runnable {
 		private Socket socket; // "A socket is an endpoint for communication between two machines."
+		
 		JavaMon(Socket socket) { // Constructor qui va etre appelé pour assigner un socket a une connexion
 			this.socket = socket; 
 		}
-
-		static String messageRecu;
-		static String nomA;
-		static String nomB;		
-		static int PVA;
-		static int PVB;
-
 
 		@Override
 		public void run() {
@@ -67,9 +69,9 @@ public class server {
 						System.out.println(nomA + " s'ajoute à la partie");
 						out.println("MENU");
 					}
-					
+
 				}
-				
+
 			} catch (IOException e) { // InputOutput Stream Exeception
 				System.out.println("Erreur socket:" + socket);
 				e.printStackTrace();
