@@ -1,4 +1,4 @@
-package phil;
+package javaMon;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -15,7 +15,6 @@ public class Client {
 	static DataInputStream in;
 	static DataOutputStream out;
 	static String monId;
-	//static String autreId;
 	static int pv;
 
 	static String messageRecu = "";
@@ -23,7 +22,7 @@ public class Client {
 	static String nom = "";
 	private static boolean vivant;
 
-	static final String MENU = "Appuyer sur [1] pour attaquer, [2] pour notCodedYet, [3] pour notCodedYet";
+	static final String MENU = "Appuyer sur [1] pour attaquer";
 	static final String ATT = "Appuyer sur [1] pour faire 1 de dégats, [2] pour faire 3 de dégats, [3] pour faire 5 de dégats";
 
 
@@ -39,17 +38,16 @@ public class Client {
 			out = new DataOutputStream(socket.getOutputStream());
 			monId = in.readUTF();
 			pv = in.readInt();
-
 			System.out.println("- - Connexion établie avec le serveur - - Vous êtes joueur #" + monId);
 			System.out.println("PV : " + pv);
-			System.out.println("Bonjour, quel est votre nom ?");
+			System.out.println("Bonjour, quel sera votre nom ? ");
 
 			nom = scan.nextLine();			
 			out.writeUTF(nom);
 
 			vivant = true;
 
-			while (vivant) {				
+			while (vivant) {			
 				messageRecu = in.readUTF(); 
 				if (messageRecu.startsWith(monId + " MENU")) {
 					menu();
@@ -57,15 +55,10 @@ public class Client {
 				if (messageRecu.startsWith(monId + " PV")) {
 					pv = Integer.parseInt(messageRecu.substring(5));
 				}
-				if (pv < 1) {
-					out.writeUTF(monId + " DEAD");
-					vivant = false;
-				}
 			}
 
 		}
 	}
-
 
 	private static void menu() {
 		System.out.println(MENU);
@@ -77,11 +70,6 @@ public class Client {
 			case "1" :
 				attaque();
 				break;
-			case "2" :
-				equipe();
-				break;
-			case "3" :
-				item();
 			default:
 				System.out.println("Choix valide svp");
 		}
@@ -111,11 +99,4 @@ public class Client {
 		}
 	}
 
-	private static void equipe() {
-
-	}
-
-	private static void item() {
-
-	}
 }

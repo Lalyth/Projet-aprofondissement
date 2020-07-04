@@ -1,15 +1,11 @@
-package phil;
+package javaMon;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
 import java.util.concurrent.Executors;
 
 /* Serveur pour Projet Approfondissement
@@ -28,7 +24,7 @@ public class Server {
 
 	public static void main(String[] args) throws Exception {
 		try (var listener = new ServerSocket(59090)) {
-			System.out.println("Server status : Barely Working");
+			System.out.println("Server status : En marche");
 			nbrJoueurs = 0;
 			var pool = Executors.newFixedThreadPool(2); // Nombre de socket disponible dans le pool
 			while (true) {
@@ -54,22 +50,6 @@ public class Server {
 			this.pv = pv;
 		}
 
-		public boolean isVivant() {
-			return vivant;
-		}
-
-		public void setVivant(boolean vivant) {
-			this.vivant = vivant;
-		}
-
-		public int getId() {
-			return id;
-		}
-
-		public String getNom() {
-			return nom;
-		}
-
 		public String toString() {
 			return String.format("Nom : %S PV : %d, ID : %d", nom, pv, id);
 		}
@@ -83,7 +63,7 @@ public class Server {
 		@Override
 		public void run() {
 			joueurs.add(this);
-			System.out.println("Joueur " + id + " se connecte - Connection avec: " + socket);
+			System.out.println("Joueur #" + id + " se connecte - Connection avec: " + socket);
 
 			try {
 				var in = new DataInputStream(socket.getInputStream());
@@ -107,17 +87,21 @@ public class Server {
 						if (messageRecu.substring(4).startsWith("1")) {
 							int atkId = Integer.parseInt(messageRecu.substring(6));
 							joueurs.get(1).setPv(joueurs.get(1).getPv() - ATTAQUE[atkId]);
+							
 							for (DataOutputStream o : writers) {
 								o.writeUTF("2 PV " + joueurs.get(1).getPv());
 								o.writeUTF("2 MENU");
 							}
+							
 						} else if (messageRecu.substring(4).startsWith("2")) {
 							int atkId = Integer.parseInt(messageRecu.substring(6));
 							joueurs.get(0).setPv(joueurs.get(0).getPv() - ATTAQUE[atkId]);
+							
 							for (DataOutputStream o : writers) {
 								o.writeUTF("1 PV " + joueurs.get(0).getPv());
 								o.writeUTF("1 MENU");
 							}
+							
 						}
 					}
 				}
